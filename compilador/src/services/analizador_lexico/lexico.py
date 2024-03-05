@@ -52,7 +52,7 @@ def t_NUMERO_ENTERO(t):
     return t
 
 def t_NUMERO_DECIMAL(t):
-    r'\d+\.\d+'
+    r'(?<!\d)\d*\.?\d+(e[+-]?\d+)?'
     t.value = float(t.value)
     return t
 
@@ -202,8 +202,6 @@ def t_CORCHETE_DERECHO(t):
     r'\]'
     return t
 
-t_ignore = ' \t\n\[\]'
-
 def t_COMENTARIO(t):
     r'//.*\n'
     pass
@@ -211,16 +209,17 @@ def t_COMENTARIO(t):
 def t_error(t):
     print("Error: caracter desconocido '%s'" % t.value[0])
     t.lexer.skip(1)
+    
+t_ignore = ' \t\n\[\]'
 
 Programa = """
 public class HolaMundo {
-    private int numero = 5;
+    private float numero =  3.1415;
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int num = scan.nextInt();
         System.out.println(num);      
-        System.out.println("Hola mundo!");
-
+        System.out.println("Hola", num );
     }
 }
 """
